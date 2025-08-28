@@ -1,20 +1,6 @@
 <div
     class="bg-white shadow-xl rounded-xl flex flex-col h-full border border-gray-200 overflow-hidden"
-    x-data="{
-        messages: @entangle('messages'),
-        isTyping: @entangle('isTyping'),
-        newMessage: @entangle('newMessage'),
-        init() {
-            this.$watch('messages', () => {
-                this.$nextTick(() => {
-                    const container = this.$refs.messageContainer;
-                    if (container) {
-                        container.scrollTop = container.scrollHeight;
-                    }
-                })
-            })
-        }
-    }"
+    x-data="{ }"
 >
     <!-- Chat Header -->
     <div class="border-b border-gray-200 p-6 bg-gradient-to-r from-blue-600 to-blue-800">
@@ -28,11 +14,19 @@
                     <p class="text-blue-100 text-sm">Siap membantu 24/7</p>
                 </div>
             </div>
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-3">
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 shadow-sm">
                     <i class="fas fa-circle text-green-500 text-xs mr-2 animate-pulse"></i>
                     Online
                 </span>
+                <div class="hidden md:flex items-center text-xs text-white/90">
+                    <span class="mr-2">Provider:</span>
+                    <select wire:model="provider" class="bg-white/20 text-white px-2 py-1 rounded border border-white/30 focus:outline-none">
+                        <option value="">Default</option>
+                        <option value="openai">OpenAI</option>
+                        <option value="gemini">Gemini</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -42,13 +36,9 @@
         class="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50 chat-scrollbar" 
         id="chat-messages"
         x-ref="messageContainer"
-        x-data="{
-            scrollToBottom() {
-                this.$el.scrollTop = this.$el.scrollHeight;
-            }
-        }"
-        x-init="scrollToBottom"
-        @chatUpdated="scrollToBottom"
+        x-data="{ scrollToBottom(){ this.$el.scrollTop = this.$el.scrollHeight } }"
+        x-init="scrollToBottom()"
+        @chatUpdated.window="scrollToBottom()"
     >
         @if(count($messages) == 0)
             <!-- Welcome Message -->
@@ -95,7 +85,7 @@
     </div>
 
     <!-- Typing Indicator -->
-    <div x-show="isTyping" x-cloak class="p-6">
+    <div wire:loading.flex wire:target="generateAIResponse,sendMessage" x-cloak class="p-6">
         <div class="chat-message">
             <div class="chat-message-avatar ai">
                 <i class="fas fa-robot text-white text-lg"></i>
@@ -128,36 +118,25 @@
 
     <!-- Chat Input -->
     <div class="border-t border-gray-200 p-6 bg-white">
-        <div class="flex items-center space-x-3">
+        <form wire:submit.prevent="sendMessage" class="flex items-center space-x-3">
             <div class="relative flex-1">
                 <input 
                     type="text"
-                    x-model="newMessage"
+                    wire:model.defer="newMessage"
+                    wire:keydown.enter.prevent="sendMessage"
                     placeholder="Ketik pesan Anda..."
                     class="chat-input-field"
-                    :disabled="isTyping"
-                    @keydown.enter.prevent="sendMessage()"
                     autofocus
                 >
                 <button 
-                    type="button"
-                    @click="sendMessage()"
+                    type="submit"
                     class="chat-send-btn"
-                    :disabled="isTyping || !newMessage.trim()"
+                    wire:loading.attr="disabled"
+                    wire:target="sendMessage"
                 >
                     <i class="fas fa-paper-plane text-sm"></i>
                 </button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
-
-<script>
-function sendMessage() {
-    const message = document.querySelector('[x-model="newMessage"]').value.trim();
-    if (!message) return;
-    
-    // Call Livewire method
-    @this.sendMessage();
-}
-</script>

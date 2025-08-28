@@ -11,7 +11,8 @@
                 @livewire('chat-box', [
                     'chatId' => $chatId ?? uniqid('chat_'),
                     'ticketId' => $ticketId ?? null,
-                    'customerId' => auth()->user()->customer->id ?? auth()->user()->id ?? null
+                    'customerId' => auth()->user()->customer->id ?? auth()->user()->id ?? null,
+                    'provider' => request('provider')
                 ])
             </div>
 
@@ -359,10 +360,14 @@ function loadCustomerInfo() {
 }
 
 function loadAIStats() {
-    fetch('/api/ai/stats')
+    fetch('/api/ai/stats', { headers: { 'Accept': 'application/json' } })
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
+        }
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+            throw new Error('Invalid JSON response');
         }
         return response.json();
     })

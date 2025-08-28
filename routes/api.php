@@ -24,7 +24,8 @@ use App\Http\Controllers\DashboardController;
 Route::post('ai/test-chat', [AIController::class, 'generateResponse']);
 
 // All API routes require authentication
-Route::middleware('auth:sanctum')->group(function () {
+// Prefix all API route names with "api." to avoid collisions with web route names
+Route::middleware('auth:sanctum')->name('api.')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
@@ -42,10 +43,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('tickets/{ticket}/assign', [TicketController::class, 'assignAgent']);
 
     // Chat routes
-    Route::get('chat/messages', [ChatController::class, 'index']);
-    Route::post('chat/messages', [ChatController::class, 'store']);
-    Route::patch('chat/messages/{message}/read', [ChatController::class, 'markAsRead']);
-    Route::get('chat/stats', [ChatController::class, 'getStats']);
+    Route::get('chat/messages', [ChatController::class, 'index'])->name('chat.messages.index');
+    Route::post('chat/messages', [ChatController::class, 'store'])->name('chat.messages.store');
+    Route::patch('chat/messages/{message}/read', [ChatController::class, 'markAsRead'])->name('chat.messages.read');
+    Route::get('chat/stats', [ChatController::class, 'getStats'])->name('chat.stats');
 
     // Agent routes
     Route::apiResource('agents', AgentController::class);

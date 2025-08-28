@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\ChatMessage;
-use App\Services\OpenAIService;
+use App\Services\AIService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -18,6 +18,7 @@ class ChatBox extends Component
     public $agentId;
     public $isTyping = false;
     public $error = null;
+    public $provider = null; // optional override: 'openai' or 'gemini'
 
     protected $listeners = [
         'refreshMessages' => 'loadMessages',
@@ -29,12 +30,13 @@ class ChatBox extends Component
         return view('livewire.chat-box');
     }
 
-    public function mount($chatId, $ticketId = null, $customerId = null, $agentId = null)
+    public function mount($chatId, $ticketId = null, $customerId = null, $agentId = null, $provider = null)
     {
         $this->chatId = $chatId;
         $this->ticketId = $ticketId;
         $this->customerId = $customerId;
         $this->agentId = $agentId;
+        $this->provider = $provider ?: request()->get('provider');
         $this->loadMessages();
     }
 
@@ -89,7 +91,14 @@ class ChatBox extends Component
             $this->isTyping = true;
             $this->dispatch('chatUpdated');
 
-            $aiService = app(OpenAIService::class);
+            // Resolve AI provider
+            if ($this->provider === 'gemini') {
+                $aiService = app(\App\Services\GeminiService::class);
+            } elseif ($this->provider === 'openai') {
+                $aiService = app(\App\Services\OpenAIService::class);
+            } else {
+                $aiService = app(AIService::class);
+            }
 
             // Get previous messages for context
             $previousMessages = $this->messages->take(-5); // Last 5 messages for context

@@ -6,16 +6,7 @@ use App\Http\Controllers\Web\TicketWebController;
 use App\Http\Controllers\Web\AgentWebController;
 use App\Http\Controllers\AIController;
 use Illuminate\Support\Facades\Route;
-use Livewire\Livewire;
-
-// Register Livewire routes
-Livewire::setScriptRoute(function ($handle) {
-    return Route::get('/livewire/livewire.js', $handle)->name('livewire.js');
-});
-
-Livewire::setUpdateRoute(function ($handle) {
-    return Route::post('/livewire/update', $handle)->name('livewire.update')->middleware('web');
-});
+// Livewire uses default routes; no custom overrides needed
 
 // Public routes
 Route::get('/', function () {
