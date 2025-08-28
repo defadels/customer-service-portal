@@ -1,4 +1,11 @@
 <x-guest-layout>
+    <div class="mb-6 text-center">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-600 text-white mx-auto mb-3">
+            <i class="fas fa-robot"></i>
+        </div>
+        <h1 class="text-xl font-bold text-gray-900">CSP AI</h1>
+        <p class="text-sm text-gray-500">Customer Service Portal</p>
+    </div>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 

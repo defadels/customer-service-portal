@@ -1,4 +1,21 @@
 <x-guest-layout>
+    <div class="mb-6 text-center">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-600 text-white mx-auto mb-3">
+            <i class="fas fa-robot"></i>
+        </div>
+        <h1 class="text-xl font-bold text-gray-900">CSP AI</h1>
+        <p class="text-sm text-gray-500">Customer Service Portal</p>
+    </div>
+
+    <!-- Demo account info -->
+    <div class="mb-6 p-4 rounded-lg bg-blue-50 text-blue-800 text-sm">
+        <div class="font-semibold mb-1">Akun demo:</div>
+        <ul class="list-disc pl-5 space-y-1">
+            <li><span class="font-medium">Admin</span>: admin@corisindo.com / password123</li>
+            <li><span class="font-medium">Supervisor</span>: supervisor@corisindo.com / password123</li>
+            <li><span class="font-medium">Agent</span>: agent@corisindo.com / password123</li>
+        </ul>
+    </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -32,7 +49,10 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="flex items-center justify-between mt-4">
+            <a class="text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register') }}">
+                {{ __('Register') }}
+            </a>
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
