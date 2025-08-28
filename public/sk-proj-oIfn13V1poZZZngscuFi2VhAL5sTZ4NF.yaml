@@ -1,0 +1,10 @@
+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
+
+curl https://api.openai.com/v1/responses \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer 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" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "input": "write a haiku about ai",
+    "store": true
+  }'
