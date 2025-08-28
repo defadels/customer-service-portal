@@ -67,21 +67,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Customer routes (accessible by all authenticated users)
     Route::get('/customers', [CustomerWebController::class, 'index'])->name('customers.index');
     Route::get('/customers/create', [CustomerWebController::class, 'create'])->name('customers.create');
+    Route::post('/customers', [CustomerWebController::class, 'store'])->name('customers.store');
     Route::get('/customers/{id}', [CustomerWebController::class, 'show'])->name('customers.show');
     Route::get('/customers/{id}/edit', [CustomerWebController::class, 'edit'])->name('customers.edit');
+    Route::put('/customers/{id}', [CustomerWebController::class, 'update'])->name('customers.update');
+    Route::delete('/customers/{id}', [CustomerWebController::class, 'destroy'])->name('customers.destroy');
 
     // Ticket routes (accessible by all authenticated users)
     Route::get('/tickets', [TicketWebController::class, 'index'])->name('tickets.index');
     Route::get('/tickets/create', [TicketWebController::class, 'create'])->name('tickets.create');
+    Route::post('/tickets', [TicketWebController::class, 'store'])->name('tickets.store');
     Route::get('/tickets/{id}', [TicketWebController::class, 'show'])->name('tickets.show');
     Route::get('/tickets/{id}/edit', [TicketWebController::class, 'edit'])->name('tickets.edit');
+    Route::put('/tickets/{id}', [TicketWebController::class, 'update'])->name('tickets.update');
+    Route::delete('/tickets/{id}', [TicketWebController::class, 'destroy'])->name('tickets.destroy');
 
     // Agent routes (admin and supervisor only)
     Route::middleware(['role:admin,supervisor'])->group(function () {
         Route::get('/agents', [AgentWebController::class, 'index'])->name('agents.index');
         Route::get('/agents/create', [AgentWebController::class, 'create'])->name('agents.create');
+        Route::post('/agents', [AgentWebController::class, 'store'])->name('agents.store');
         Route::get('/agents/{id}', [AgentWebController::class, 'show'])->name('agents.show');
         Route::get('/agents/{id}/edit', [AgentWebController::class, 'edit'])->name('agents.edit');
+        Route::put('/agents/{id}', [AgentWebController::class, 'update'])->name('agents.update');
+        Route::delete('/agents/{id}', [AgentWebController::class, 'destroy'])->name('agents.destroy');
     });
 });
 

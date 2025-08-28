@@ -81,4 +81,62 @@ class TicketWebController extends Controller
         $agents = Agent::all();
         return view('tickets.edit', compact('ticket', 'customers', 'agents'));
     }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'subject' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'priority' => 'required|in:Low,Medium,High',
+            'status' => 'required|in:Open,In Progress,Resolved,Closed',
+            'category' => 'nullable|string|max:100',
+            'assigned_agent_id' => 'nullable|exists:agents,id',
+        ]);
+
+        $validated['ticket_number'] = 'TKT-' . now()->format('Y') . '-' . str_pad((string) (Ticket::max('id') + 1), 6, '0', STR_PAD_LEFT);
+
+        $ticket = Ticket::create($validated);
+
+        return redirect()->route('tickets.show', $ticket->id)
+            ->with('status', 'Ticket created successfully');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        $validated = $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'subject' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'priority' => 'required|in:Low,Medium,High',
+            'status' => 'required|in:Open,In Progress,Resolved,Closed',
+            'category' => 'nullable|string|max:100',
+            'assigned_agent_id' => 'nullable|exists:agents,id',
+        ]);
+
+        $ticket->update($validated);
+
+        return redirect()->route('tickets.show', $ticket->id)
+            ->with('status', 'Ticket updated successfully');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        $ticket->delete();
+
+        return redirect()->route('tickets.index')
+            ->with('status', 'Ticket deleted successfully');
+    }
 }

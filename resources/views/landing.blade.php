@@ -207,7 +207,7 @@
                     <div class="w-10 h-10 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center glow card-shine">
                         <i class="fas fa-brain text-white text-xl"></i>
                     </div>
-                    <span class="ml-3 text-2xl font-bold text-gradient">Corisindo AI</span>
+                    <span class="ml-3 text-2xl font-bold text-gradient">CSP AI</span>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#features" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Features</a>
@@ -711,7 +711,7 @@
                         <div class="w-10 h-10 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-xl flex items-center justify-center">
                             <i class="fas fa-brain text-white text-xl"></i>
                         </div>
-                        <span class="ml-3 text-xl font-bold">Corisindo AI</span>
+                        <span class="ml-3 text-xl font-bold">CSP AI</span>
                     </div>
                     <p class="text-slate-400 mb-4">
                         AI-Powered Customer Service Portal designed for CORISINDO 2025 Web Design Competition.
@@ -756,7 +756,7 @@
             </div>
 
             <div class="border-t border-slate-800 mt-12 pt-8 text-center text-slate-400">
-                <p>&copy; 2025 Corisindo AI. Built for CORISINDO 2025 Web Design Competition.
+                <p>&copy; 2025 CSP AI. Built for CORISINDO 2025 Web Design Competition.
                 Demonstrating AI and Big Data optimization in decision-making processes.</p>
             </div>
         </div>

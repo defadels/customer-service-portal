@@ -78,6 +78,60 @@ class AgentWebController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:agents,email',
+            'role' => 'required|in:agent,supervisor,admin',
+            'department' => 'nullable|string|max:100',
+            'status' => 'nullable|in:Active,Inactive',
+            'supervisor_id' => 'nullable|exists:agents,id',
+        ]);
+
+        $agent = Agent::create($validated);
+
+        return redirect()->route('agents.show', $agent->id)
+            ->with('status', 'Agent created successfully');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $agent = Agent::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:agents,email,' . $agent->id,
+            'role' => 'required|in:agent,supervisor,admin',
+            'department' => 'nullable|string|max:100',
+            'status' => 'nullable|in:Active,Inactive',
+            'supervisor_id' => 'nullable|exists:agents,id',
+        ]);
+
+        $agent->update($validated);
+
+        return redirect()->route('agents.show', $agent->id)
+            ->with('status', 'Agent updated successfully');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $agent = Agent::findOrFail($id);
+        $agent->delete();
+
+        return redirect()->route('agents.index')
+            ->with('status', 'Agent deleted successfully');
+    }
+
+    /**
      * Calculate agent performance metrics
      */
     private function calculateAgentPerformance($agent)
