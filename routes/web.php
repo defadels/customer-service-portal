@@ -13,25 +13,14 @@ Route::get('/', function () {
     return view('landing');
 })->name('landing');
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
-
-Route::get('/services', function () {
-    return view('services');
-})->name('services');
-
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
-
-Route::get('/blog', function () {
-    return view('blog');
-})->name('blog');
-
 Route::get('/home', function () {
     return redirect()->route('dashboard');
 })->name('home');
+
+  // Test Chat Route
+  Route::get('/chat/test', function () {
+    return view('chat-test');
+})->name('chat.test');
 
 // Authentication required routes
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -44,11 +33,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/chat', function () {
         return view('chat');
     })->name('chat.index');
-
-    // Test Chat Route
-    Route::get('/chat/test', function () {
-        return view('chat-test');
-    })->name('chat.test');
 
     // Profile management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
