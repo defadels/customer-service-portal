@@ -213,10 +213,10 @@
                     <a href="#features" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Features</a>
                     <a href="#ai-benefits" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">AI Benefits</a>
                     <a href="#competition" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Competition</a>
-                    <a href="{{ route('about') }}" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">About</a>
-                    <a href="{{ route('services') }}" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Services</a>
-                    <a href="{{ route('blog') }}" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Blog</a>
-                    <a href="{{ route('contact') }}" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Contact</a>
+                    {{-- <a href="{{ route('about') }}" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">About</a> --}}
+                    {{-- <a href="{{ route('services') }}" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Services</a> --}}
+                    {{-- <a href="{{ route('blog') }}" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Blog</a> --}}
+                    <a href="{{ url('/chat/test') }}" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Chat Test</a>
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('login') }}" class="text-slate-700 hover:text-blue-600 transition-colors font-medium">Login</a>
