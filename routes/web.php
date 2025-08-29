@@ -17,10 +17,7 @@ Route::get('/home', function () {
     return redirect()->route('dashboard');
 })->name('home');
 
-  // Test Chat Route
-  Route::get('/chat/test', function () {
-    return view('chat-test');
-})->name('chat.test');
+
 
 // Authentication required routes
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -28,6 +25,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+      // Test Chat Route
+  Route::get('/chat/test', function () {
+    return view('chat-test');
+})->name('chat.test');
 
     // Chat Interface
     Route::get('/chat', function () {

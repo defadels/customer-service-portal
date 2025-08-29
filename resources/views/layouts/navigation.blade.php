@@ -40,7 +40,7 @@
                         {{ __('Chat') }}
                     </x-nav-link>
                  
-                    <x-nav-link :href="route('chat.test')" :active="request()->routeIs('chat.*')">
+                    <x-nav-link :href="route('chat.test')" :active="request()->routeIs('chat.test')">
                         <i class="fas fa-comments mr-2"></i>
                         {{ __('Test API') }}
                     </x-nav-link>
